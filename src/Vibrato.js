@@ -14,11 +14,11 @@ const loadBuffer = async () => {
 loadBuffer();
 
 // Create vibrato effect
-const delay = audioContext.createDelay(10);
-delay.delayTime.value = 1;
+const delay = audioContext.createDelay(5);
+delay.delayTime.value = 0.85;
 
 const gain = audioContext.createGain();
-gain.gain.value = 0.005;
+gain.gain.value = 0.005;//0.005;
 
 const lfo = audioContext.createOscillator();
 lfo.frequency.value = 5;

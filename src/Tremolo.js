@@ -13,9 +13,10 @@ const loadBuffer = async () => {
 };
 loadBuffer();
 
-// Create a GainNode for controlling the tremolo effect
-const tremoloGainNode = audioContext.createGain();
-tremoloGainNode.connect(audioContext.destination);
+const inputGain = audioContext.createGain();
+inputGain.gain.value = 0.2;
+source.connect(inputGain);
+inputGain.connect(audioContext.destination);
 
 // Create an LFO (Low Frequency Oscillator) for modulating the tremolo gain
 const lfo = audioContext.createOscillator();
@@ -23,47 +24,23 @@ lfo.type = 'sine';
 lfo.frequency.value = 15; // adjust this value to change the tremolo rate
 lfo.start();
 
-// Connect the LFO to the tremolo GainNode
-lfo.connect(tremoloGainNode.gain);
-
 // Adjust the depth and offset of the tremolo effect by setting the initial gain value and the depth of modulation
 const depth = 0.75; // adjust this value to change the depth of the tremolo effect
 const offset = 1 - depth;
+
+// Create a GainNode for controlling the tremolo effect
+const tremoloGainNode = audioContext.createGain();
 tremoloGainNode.gain.value = offset;
+tremoloGainNode.connect(audioContext.destination);
+
+// Connect the LFO to the tremolo GainNode
+// lfo.connect(tremoloGainNode.gain);
+lfo.connect(tremoloGainNode.gain);
 
 // Apply the tremolo effect to the audio by connecting the audio buffer source node to the tremolo gain node
 source.connect(tremoloGainNode);
+tremoloGainNode.connect(inputGain);
 // source.connect(audioContext.destination);
-
-// Adjust the depth and offset of the tremolo effect over time by updating the gain value of the tremolo gain node
-// setInterval(function () {
-//   const depthValue = depth / 2; // adjust this value to change the shape of the tremolo effect
-//   tremoloGainNode.gain.setValueAtTime(offset + depthValue, audioContext.currentTime);
-//   tremoloGainNode.gain.setValueAtTime(offset - depthValue, audioContext.currentTime + (1 / lfo.frequency.value / 2));
-// }, 0);
-
-// const zmenaAudia = () => {
-//   source.start();
-//   const now = audioContext.currentTime;
-//   const depthValue = depth / 2; // adjust this value to change the shape of the tremolo effect
-//   tremoloGainNode.gain.setValueAtTime(offset + depthValue, now);
-//   console.log(tremoloGainNode.gain.value);
-//   tremoloGainNode.gain.linearRampToValueAtTime(offset - depthValue, now + 1 / lfo.frequency.value / 2);
-//   console.log(tremoloGainNode.gain.value);
-//   tremoloGainNode.gain.setValueAtTime(offset - depthValue, now + 1 / lfo.frequency.value);
-//   console.log(tremoloGainNode.gain.value);
-//   tremoloGainNode.gain.linearRampToValueAtTime(offset + depthValue, now + 1 / lfo.frequency.value + 1 / lfo.frequency.value / 2);
-//   console.log(tremoloGainNode.gain.value);
-//   tremoloGainNode.gain.setValueAtTime(offset + depthValue, now + 2 / lfo.frequency.value);
-//   console.log(tremoloGainNode.gain.value);
-//   tremoloGainNode.gain.linearRampToValueAtTime(offset - depthValue, now + 2 / lfo.frequency.value + 1 / lfo.frequency.value / 2);
-//   console.log(tremoloGainNode.gain.value);
-//   tremoloGainNode.gain.setValueAtTime(offset - depthValue, now + 3 / lfo.frequency.value);
-//   console.log(tremoloGainNode.gain.value);
-//   tremoloGainNode.gain.linearRampToValueAtTime(offset + depthValue, now + 3 / lfo.frequency.value + 1 / lfo.frequency.value / 2);
-
-//   console.log(tremoloGainNode.gain.value);
-// };
 
 let temp = false;
 
