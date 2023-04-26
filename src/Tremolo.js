@@ -11,6 +11,7 @@ const loadBuffer = async () => {
     .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
   source.buffer = audioBuffer;
 };
+
 loadBuffer();
 
 const inputGain = audioContext.createGain();
@@ -55,11 +56,12 @@ const Tremolo = () => {
 const source = audioContext.createBufferSource();
 
 const loadBuffer = async () => {
-const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
-  .then((res) => res.arrayBuffer())
-  .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
-source.buffer = audioBuffer;
+  const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
+    .then((res) => res.arrayBuffer())
+    .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
+  source.buffer = audioBuffer;
 };
+
 loadBuffer();
 
 const tremoloGainNode = audioContext.createGain();

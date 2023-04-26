@@ -15,6 +15,7 @@ const loadBuffer = async () => {
     .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
   sourceNode.buffer = audioBuffer;
 };
+
 loadBuffer();
 
 // Create two AllPassFilterNodes for the two delayed copies

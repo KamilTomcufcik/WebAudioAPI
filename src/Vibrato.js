@@ -11,6 +11,7 @@ const loadBuffer = async () => {
     .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
   source.buffer = audioBuffer;
 };
+
 loadBuffer();
 
 // Create vibrato effect
@@ -18,7 +19,7 @@ const delay = audioContext.createDelay(5);
 delay.delayTime.value = 0.85;
 
 const gain = audioContext.createGain();
-gain.gain.value = 0.005;//0.005;
+gain.gain.value = 0.005; //0.005;
 
 const lfo = audioContext.createOscillator();
 lfo.frequency.value = 5;
@@ -44,11 +45,12 @@ const Vibrato = () => {
 const source = audioContext.createBufferSource();
 
 const loadBuffer = async () => {
-const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
-  .then((res) => res.arrayBuffer())
-  .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
-source.buffer = audioBuffer;
+  const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
+    .then((res) => res.arrayBuffer())
+    .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
+  source.buffer = audioBuffer;
 };
+
 loadBuffer();
 
 const delay = audioContext.createDelay(10);
