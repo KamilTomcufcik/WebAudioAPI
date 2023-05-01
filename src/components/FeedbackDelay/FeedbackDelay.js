@@ -3,7 +3,7 @@ const audioContext = new AudioContext();
 let sourceNode = audioContext.createBufferSource();
 
 const loadBuffer = async () => {
-  const audioBuffer = await fetch(new URL('./Kick_one.wav', import.meta.url))
+  const audioBuffer = await fetch('./audio/Kick_one.wav')
     .then((res) => res.arrayBuffer())
     .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
   sourceNode.buffer = audioBuffer;
@@ -32,7 +32,7 @@ const FeedbackDelay = () => {
 let sourceNode = audioContext.createBufferSource();
 
 const loadBuffer = async () => {
-  const audioBuffer = await fetch(new URL('./Kick_one.wav', import.meta.url))
+  const audioBuffer = await fetch('./audio/Kick_one.wav')
     .then((res) => res.arrayBuffer())
     .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
   sourceNode.buffer = audioBuffer;

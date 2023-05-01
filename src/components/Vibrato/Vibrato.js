@@ -6,7 +6,7 @@ const source = audioContext.createBufferSource();
 
 // Load audio file into audio buffer source
 const loadBuffer = async () => {
-  const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
+  const audioBuffer = await fetch('./audio/AcGtr.wav')
     .then((res) => res.arrayBuffer())
     .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
   source.buffer = audioBuffer;
@@ -45,7 +45,7 @@ const Vibrato = () => {
 const source = audioContext.createBufferSource();
 
 const loadBuffer = async () => {
-  const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
+  const audioBuffer = await fetch('./audio/AcGtr.wav')
     .then((res) => res.arrayBuffer())
     .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
   source.buffer = audioBuffer;

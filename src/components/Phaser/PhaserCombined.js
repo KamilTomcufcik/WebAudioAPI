@@ -9,17 +9,7 @@ const phaser = new Tone.Phaser({
   stages: 2,
 }).toDestination();
 
-let playerPhaser;
-
-const loadBuffer4 = async () => {
-  const audioContext = new AudioContext();
-  const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
-    .then((res) => res.arrayBuffer())
-    .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
-  playerPhaser = new Tone.Player(audioBuffer).connect(phaser);
-};
-
-loadBuffer4();
+let playerPhaser = new Tone.Player('./audio/AcGtr.wav').connect(phaser);
 
 const PhaserCombined = () => {
   return (
@@ -35,17 +25,7 @@ const PhaserCombined = () => {
   stages: 2,
 }).toDestination();
 
-let playerPhaser;
-
-const loadBuffer4 = async () => {
-  const audioContext = new AudioContext();
-  const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
-    .then((res) => res.arrayBuffer())
-    .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
-  playerPhaser = new Tone.Player(audioBuffer).connect(phaser);
-};
-
-loadBuffer4();
+let playerPhaser = new Tone.Player('./audio/AcGtr.wav').connect(phaser);
 
 playerPhaser.start();`}
           </code>

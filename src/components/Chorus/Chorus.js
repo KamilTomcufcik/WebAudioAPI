@@ -6,7 +6,7 @@ const sourceNode = audioContext.createBufferSource();
 
 // Load audio file into audio buffer source
 const loadBuffer = async () => {
-  const audioBuffer = await fetch(new URL('./singing-female.wav', import.meta.url))
+  const audioBuffer = await fetch('./audio/singing-female.wav')
     .then((res) => res.arrayBuffer())
     .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
   sourceNode.buffer = audioBuffer;
@@ -64,7 +64,7 @@ const Chorus = () => {
 const sourceNode = audioContext.createBufferSource();
 
 const loadBuffer = async () => {
-  const audioBuffer = await fetch(new URL('./singing-female.wav', import.meta.url))
+  const audioBuffer = await fetch('./audio/singing-female.wav')
     .then((res) => res.arrayBuffer())
     .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
   sourceNode.buffer = audioBuffer;

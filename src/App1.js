@@ -1,46 +1,19 @@
 import * as Tone from 'tone';
 import './App.css';
 import ButtonList from './ButtonList';
-import PitchShift from './PitchShift';
-import ChorusCombined from './ChorusCombined';
-import PhaserCombined from './PhaserCombined';
-import VibratoCombined from './VibratoCombined';
-import PingPongDelayCombined from './PingPongDelayCombined';
-import FeedbackDelayCombined from './FeedbackDelayCombined';
+import ChorusCombined from './components/Chorus/ChorusCombined';
+import PhaserCombined from './components/Phaser/PhaserCombined';
+import VibratoCombined from './components/Vibrato/VibratoCombined';
+import PingPongDelayCombined from './components/PingPongDelay/PingPongDelayCombined';
+import FeedbackDelayCombined from './components/FeedbackDelay/FeedbackDelayCombined';
+import ConvolverReverbCombined from './components/ConvolverReverb/ConvolverReverbCombined';
+import PitchShiftCombined from './components/PitchShift/PitchShiftCombined';
+import GraphicEQCombined from './components/GraphicEQ/GraphicEQCombined';
+import TremoloCombined from './components/Tremolo/TremoloCombined';
+import ParametricEQCombined from './components/ParametricEQ/ParametricEQCombined';
 
 // prva ukazka
 const synth = new Tone.Synth().toDestination();
-
-// pitch shift
-const pitchShift = new Tone.PitchShift(12).toDestination();
-
-let playerPitchShift;
-const loadBuffer2 = async () => {
-  const audioContext = new AudioContext();
-  const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
-    .then((res) => res.arrayBuffer())
-    .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
-  playerPitchShift = new Tone.Player(audioBuffer).connect(pitchShift);
-};
-
-loadBuffer2();
-
-// reverb
-const reverb = new Tone.Reverb({
-  decay: 15,
-  wet: 0.5,
-}).toDestination();
-
-let playerReverb;
-const loadBuffer5 = async () => {
-  const audioContext = new AudioContext();
-  const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
-    .then((res) => res.arrayBuffer())
-    .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
-  playerReverb = new Tone.Player(audioBuffer).connect(reverb);
-};
-
-loadBuffer5();
 
 // compressor
 // const compressor = new Tone.Compressor({
@@ -106,49 +79,16 @@ synth.triggerAttackRelease('C4', '8n');`}
             <ButtonList key={notes.name} notes={notes} />
           ))}
         </section>
-
+        <TremoloCombined />
         <VibratoCombined />
-        <h2>Pitch Shift</h2>
-        <section className='basicSection'>
-          <button
-            onClick={() => {
-              playerPitchShift.start();
-            }}
-          >
-            Tone.js Pitch Shift
-          </button>
-          <PitchShift />
-        </section>
         <ChorusCombined />
+        <PitchShiftCombined />
         <PhaserCombined />
         <PingPongDelayCombined />
         <FeedbackDelayCombined />
-        <section className='basicSection'>
-          <h2>Reverb</h2>
-          <pre>
-            <code></code>
-          </pre>
-          <button
-            onClick={() => {
-              playerReverb.start();
-            }}
-          >
-            Tone.js Reverb
-          </button>
-        </section>
-        {/* <section className='basicSection'>
-          <h2>Compressor</h2>
-          <pre>
-            <code></code>
-          </pre>
-          <button
-            onClick={() => {
-              playerCompressor.start();
-            }}
-          >
-            Tone.js Compressor
-          </button>
-        </section> */}
+        <ConvolverReverbCombined />
+        <GraphicEQCombined />
+        <ParametricEQCombined />
       </main>
       <footer>
         <h3>Tomcufcik Kamil</h3>

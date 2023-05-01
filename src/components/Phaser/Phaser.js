@@ -10,7 +10,7 @@ const sourceNode = audioContext.createBufferSource();
 
 // Load audio file into audio buffer source
 const loadBuffer = async () => {
-  const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
+  const audioBuffer = await fetch('./audio/AcGtr.wav')
     .then((res) => res.arrayBuffer())
     .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
   sourceNode.buffer = audioBuffer;
@@ -76,11 +76,12 @@ outputGain.connect(audioContext.destination);
 const sourceNode = audioContext.createBufferSource();
 
 const loadBuffer = async () => {
-  const audioBuffer = await fetch(new URL('./AcGtr.wav', import.meta.url))
+  const audioBuffer = await fetch('./audio/AcGtr.wav')
     .then((res) => res.arrayBuffer())
     .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
   sourceNode.buffer = audioBuffer;
 };
+
 loadBuffer();
 
 const allPassFilter1 = audioContext.createBiquadFilter();
