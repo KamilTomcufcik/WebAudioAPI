@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 import GraphicEQ from './GraphicEQ';
 
-const player = new Tone.Player('./audio/orchestra.wav').toDestination();
+const player = new Tone.Player('./audio/orchestra.wav');
 
 const filters = [];
 const frequencies = [64, 150, 350, 1000, 2000, 6000, 12000, 16000];

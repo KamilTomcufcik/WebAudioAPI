@@ -11,6 +11,7 @@ import PitchShiftCombined from './components/PitchShift/PitchShiftCombined';
 import GraphicEQCombined from './components/GraphicEQ/GraphicEQCombined';
 import TremoloCombined from './components/Tremolo/TremoloCombined';
 import ParametricEQCombined from './components/ParametricEQ/ParametricEQCombined';
+import ChebyshevCombined from './components/Chebyshev/ChebyshevCombined';
 
 // prva ukazka
 const synth = new Tone.Synth().toDestination();
@@ -89,6 +90,7 @@ synth.triggerAttackRelease('C4', '8n');`}
         <ConvolverReverbCombined />
         <GraphicEQCombined />
         <ParametricEQCombined />
+        <ChebyshevCombined />
       </main>
       <footer>
         <h3>Tomcufcik Kamil</h3>

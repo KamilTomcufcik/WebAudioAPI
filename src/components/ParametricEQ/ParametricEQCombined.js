@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 import ParametricEQ from './ParametricEQ';
 
-const player = new Tone.Player('./audio/orchestra.wav').toDestination();
+const player = new Tone.Player('./audio/orchestra.wav');
 
 const filters = [];
 const frequencies = [500, 2000, 8000];
