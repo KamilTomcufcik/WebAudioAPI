@@ -17,7 +17,6 @@
 .env.development.local
 .env.test.local
 .env.production.local
-/src/audio-basics_outfoxing.mp3
 
 npm-debug.log*
 yarn-debug.log*

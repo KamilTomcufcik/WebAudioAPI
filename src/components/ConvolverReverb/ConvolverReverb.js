@@ -1,33 +1,33 @@
-const audioContext = new AudioContext();
+function reverbFunction() {
+  const audioContext = new AudioContext();
 
-let convolver = audioContext.createConvolver();
+  let convolver = audioContext.createConvolver();
 
-const loadImpulseResponseBuffer = async () => {
-  const buffer = await fetch('./audio/impulse_belgium.wav')
-    .then((res) => res.arrayBuffer())
-    .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
-  convolver.buffer = buffer;
-};
+  const loadImpulseResponseBuffer = async () => {
+    const buffer = await fetch('./audio/impulse_belgium.wav')
+      .then((res) => res.arrayBuffer())
+      .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
+    convolver.buffer = buffer;
+  };
 
-loadImpulseResponseBuffer();
+  loadImpulseResponseBuffer();
 
-let sourceNode = audioContext.createBufferSource();
-let gain = audioContext.createGain();
-gain.gain.value = 1.75;
+  let sourceNode = audioContext.createBufferSource();
 
-const loadBuffer = async () => {
-  const audioBuffer = await fetch('./audio/AcGtr.wav')
-    .then((res) => res.arrayBuffer())
-    .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
-  sourceNode.buffer = audioBuffer;
-};
+  const loadBuffer = async () => {
+    const audioBuffer = await fetch('./audio/AcGtr.wav')
+      .then((res) => res.arrayBuffer())
+      .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
+    sourceNode.buffer = audioBuffer;
+  };
 
-loadBuffer();
+  loadBuffer();
 
-sourceNode.connect(convolver);
-convolver.connect(gain);
-gain.connect(audioContext.destination);
-// sourceNode.connect(audioContext.destination);
+  sourceNode.connect(convolver);
+  convolver.connect(audioContext.destination);
+
+  sourceNode.start();
+}
 
 const ConvolverReverb = () => {
   return (
@@ -47,8 +47,6 @@ const loadImpulseResponseBuffer = async () => {
 loadImpulseResponseBuffer();
 
 let sourceNode = audioContext.createBufferSource();
-let gain = audioContext.createGain();
-gain.gain.value = 1.75;
 
 const loadBuffer = async () => {
   const audioBuffer = await fetch('./audio/AcGtr.wav')
@@ -60,14 +58,13 @@ const loadBuffer = async () => {
 loadBuffer();
 
 sourceNode.connect(convolver);
-convolver.connect(gain);
-gain.connect(audioContext.destination);
+convolver.connect(audioContext.destination);
 
 sourceNode.start();`}</code>
       </pre>
       <button
         onClick={() => {
-          sourceNode.start();
+          reverbFunction();
         }}
       >
         Convolver Reverb

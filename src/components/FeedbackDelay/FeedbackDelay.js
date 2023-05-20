@@ -1,27 +1,32 @@
-const audioContext = new AudioContext();
+function feedbackDelayFunction() {
+  const audioContext = new AudioContext();
 
-let sourceNode = audioContext.createBufferSource();
+  let sourceNode = audioContext.createBufferSource();
 
-const loadBuffer = async () => {
-  const audioBuffer = await fetch('./audio/Kick_one.wav')
-    .then((res) => res.arrayBuffer())
-    .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
-  sourceNode.buffer = audioBuffer;
-};
+  const loadBuffer = async () => {
+    const audioBuffer = await fetch('./audio/Kick_one.wav')
+      .then((res) => res.arrayBuffer())
+      .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
+    sourceNode.buffer = audioBuffer;
+  };
 
-loadBuffer();
+  loadBuffer();
 
-let delayFeedback = audioContext.createGain();
-let delay = audioContext.createDelay();
+  let delay = audioContext.createDelay();
+  let delayFeedback = audioContext.createGain();
 
-delay.delayTime.value = 0.5;
-delayFeedback.gain.value = 0.5;
+  delay.delayTime.value = 0.5;
+  delayFeedback.gain.value = 0.5;
 
-sourceNode.connect(delay);
-delay.connect(delayFeedback);
-delayFeedback.connect(delay);
-delayFeedback.connect(audioContext.destination);
-sourceNode.connect(audioContext.destination);
+  sourceNode.connect(delay);
+  delay.connect(delayFeedback);
+  delayFeedback.connect(delay);
+  delayFeedback.connect(audioContext.destination);
+
+  sourceNode.connect(audioContext.destination);
+
+  sourceNode.start();
+}
 
 const FeedbackDelay = () => {
   return (
@@ -56,7 +61,7 @@ sourceNode.start();`}</code>
       </pre>
       <button
         onClick={() => {
-          sourceNode.start();
+          feedbackDelayFunction();
         }}
       >
         Feedback Delay

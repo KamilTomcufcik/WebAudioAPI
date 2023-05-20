@@ -6,15 +6,15 @@ const player = new Tone.Player('./audio/orchestra.wav');
 const filters = [];
 const frequencies = [500, 2000, 8000];
 const gains = [15, -7, 5];
-const bandwidths = [3, 7, 5];
+const bandwidth = [3, 7, 5];
 
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < 3; i++) {
   filters.push(
     new Tone.Filter({
       type: 'peaking',
       frequency: new Tone.Frequency(frequencies[i], 'hz'),
       gain: gains[i],
-      Q: bandwidths[i],
+      Q: bandwidth[i],
     })
   );
 }

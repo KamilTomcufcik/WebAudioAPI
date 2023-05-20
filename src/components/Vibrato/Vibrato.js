@@ -1,40 +1,34 @@
-// Create audio context
-const audioContext = new AudioContext();
+function vibratoFunction() {
+  const audioContext = new AudioContext();
 
-// Create audio buffer source
-const source = audioContext.createBufferSource();
+  const source = audioContext.createBufferSource();
 
-// Load audio file into audio buffer source
-const loadBuffer = async () => {
-  const audioBuffer = await fetch('./audio/AcGtr.wav')
-    .then((res) => res.arrayBuffer())
-    .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
-  source.buffer = audioBuffer;
-};
+  const loadBuffer = async () => {
+    const audioBuffer = await fetch('./audio/AcGtr.wav')
+      .then((res) => res.arrayBuffer())
+      .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
+    source.buffer = audioBuffer;
+  };
 
-loadBuffer();
+  loadBuffer();
 
-// Create vibrato effect
-const delay = audioContext.createDelay(5);
-delay.delayTime.value = 0.85;
+  const delay = audioContext.createDelay(5);
+  delay.delayTime.value = 0.85;
 
-const gain = audioContext.createGain();
-gain.gain.value = 0.005; //0.005;
+  const gain = audioContext.createGain();
+  gain.gain.value = 0.005;
 
-const lfo = audioContext.createOscillator();
-lfo.frequency.value = 5;
+  const lfo = audioContext.createOscillator();
+  lfo.frequency.value = 5;
 
-// Connect LFO to delay time
-lfo.connect(gain).connect(delay.delayTime);
+  lfo.connect(gain).connect(delay.delayTime);
+  lfo.start();
 
-// Start LFO
-lfo.start();
+  source.connect(delay);
+  delay.connect(audioContext.destination);
 
-// Connect audio buffer source to vibrato effect
-source.connect(delay);
-
-// Connect vibrato effect to audio context destination
-delay.connect(audioContext.destination);
+  source.start();
+}
 
 const Vibrato = () => {
   return (
@@ -53,8 +47,8 @@ const loadBuffer = async () => {
 
 loadBuffer();
 
-const delay = audioContext.createDelay(10);
-delay.delayTime.value = 1;
+const delay = audioContext.createDelay(5);
+delay.delayTime.value = 0.85;
 
 const gain = audioContext.createGain();
 gain.gain.value = 0.005;
@@ -72,7 +66,7 @@ source.start()`}</code>
       </pre>
       <button
         onClick={() => {
-          source.start();
+          vibratoFunction();
         }}
       >
         Vibrato

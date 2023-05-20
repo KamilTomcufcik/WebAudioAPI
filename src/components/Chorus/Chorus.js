@@ -1,59 +1,51 @@
-// Create an AudioContext
-const audioContext = new AudioContext();
+function chorusFunction() {
+  const audioContext = new AudioContext();
 
-// Create audio buffer source
-const sourceNode = audioContext.createBufferSource();
+  const sourceNode = audioContext.createBufferSource();
 
-// Load audio file into audio buffer source
-const loadBuffer = async () => {
-  const audioBuffer = await fetch('./audio/singing-female.wav')
-    .then((res) => res.arrayBuffer())
-    .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
-  sourceNode.buffer = audioBuffer;
-};
+  const loadBuffer = async () => {
+    const audioBuffer = await fetch('./audio/singing-female.wav')
+      .then((res) => res.arrayBuffer())
+      .then((ArrayBuffer) => audioContext.decodeAudioData(ArrayBuffer));
+    sourceNode.buffer = audioBuffer;
+  };
 
-loadBuffer();
+  loadBuffer();
 
-// Create chorus effect
-const delayNode = audioContext.createDelay();
-const oscillatorNode = audioContext.createOscillator();
-const oscillatorGainNode = audioContext.createGain(); // Added oscillator gain node
-const dryGainNode = audioContext.createGain();
-const wetGainNode = audioContext.createGain();
+  const delay = audioContext.createDelay();
+  const lfo = audioContext.createOscillator();
+  const lfoGain = audioContext.createGain();
+  const dryGain = audioContext.createGain();
+  const wetGain = audioContext.createGain();
 
-// Set chorus parameters
-const delayTime = 0.0025; // Delay time in seconds
-const depth = 0.001; // Depth of modulation (0-1)
-const frequency = 4; // Frequency of modulation (0-1)
-const wetMix = 0.3; // Wet mix (0-1)
-const dryMix = 1.0 - wetMix; // Dry mix (0-1)
+  const delayTime = 0.0025;
+  const depth = 0.001;
+  const frequency = 4;
+  const wetMix = 0.3;
+  const dryMix = 1.0 - wetMix;
 
-// Set initial values
-delayNode.delayTime.value = delayTime;
+  delay.delayTime.value = delayTime;
+  lfoGain.gain.value = depth;
 
-// Set up oscillator gain
-oscillatorGainNode.gain.value = depth; // Set depth of modulation
+  lfo.type = 'sine';
+  lfo.frequency.value = frequency;
+  lfo.start();
 
-// Set up oscillator for modulation
-oscillatorNode.type = 'sine';
-oscillatorNode.frequency.value = frequency;
-oscillatorNode.start();
+  lfo.connect(lfoGain);
+  lfoGain.connect(delay.delayTime);
 
-// Connect oscillator to chorus delay time
-oscillatorNode.connect(oscillatorGainNode); // Connect oscillator to oscillator gain node
-oscillatorGainNode.connect(delayNode.delayTime); // Connect oscillator gain node to chorus delay time
+  dryGain.gain.value = dryMix;
+  wetGain.gain.value = wetMix;
 
-// Connect nodes
-sourceNode.connect(dryGainNode);
-dryGainNode.connect(audioContext.destination);
+  sourceNode.connect(dryGain);
+  dryGain.connect(audioContext.destination);
 
-sourceNode.connect(delayNode);
-delayNode.connect(wetGainNode);
-wetGainNode.connect(audioContext.destination);
-
-// Set up dry and wet mix gains
-dryGainNode.gain.value = dryMix;
-wetGainNode.gain.value = wetMix;
+  sourceNode.connect(delay);
+  delay.connect(wetGain);
+  wetGain.connect(audioContext.destination);
+  
+  sourceNode.start();
+}
 
 const Chorus = () => {
   return (
@@ -72,11 +64,11 @@ const loadBuffer = async () => {
 
 loadBuffer();
 
-const delayNode = audioContext.createDelay();
-const oscillatorNode = audioContext.createOscillator();
-const oscillatorGainNode = audioContext.createGain();
-const dryGainNode = audioContext.createGain();
-const wetGainNode = audioContext.createGain();
+const delay = audioContext.createDelay();
+const lfo = audioContext.createOscillator();
+const lfoGain = audioContext.createGain();
+const dryGain = audioContext.createGain();
+const wetGain = audioContext.createGain();
 
 const delayTime = 0.0025;
 const depth = 0.001;
@@ -84,32 +76,32 @@ const frequency = 4;
 const wetMix = 0.3;
 const dryMix = 1.0 - wetMix;
 
-delayNode.delayTime.value = delayTime;
+delay.delayTime.value = delayTime;
 
-oscillatorGainNode.gain.value = depth;
+lfoGain.gain.value = depth;
 
-oscillatorNode.type = 'sine';
-oscillatorNode.frequency.value = frequency;
-oscillatorNode.start();
+lfo.type = 'sine';
+lfo.frequency.value = frequency;
+lfo.start();
 
-oscillatorNode.connect(oscillatorGainNode);
-oscillatorGainNode.connect(delayNode.delayTime);
+lfo.connect(lfoGain);
+lfoGain.connect(delay.delayTime);
 
-sourceNode.connect(dryGainNode);
-dryGainNode.connect(audioContext.destination);
+sourceNode.connect(dryGain);
+dryGain.connect(audioContext.destination);
 
-sourceNode.connect(delayNode);
-delayNode.connect(wetGainNode);
-wetGainNode.connect(audioContext.destination);
+sourceNode.connect(delay);
+delay.connect(wetGain);
+wetGain.connect(audioContext.destination);
 
-dryGainNode.gain.value = dryMix;
-wetGainNode.gain.value = wetMix;
+dryGain.gain.value = dryMix;
+wetGain.gain.value = wetMix;
 
 sourceNode.start()`}</code>
       </pre>
       <button
         onClick={() => {
-          sourceNode.start();
+          chorusFunction();
         }}
       >
         Chorus

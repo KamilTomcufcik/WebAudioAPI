@@ -1,16 +1,9 @@
 import * as Tone from 'tone';
 import ConvolverReverb from './ConvolverReverb';
 
-// reverb
-const reverb = new Tone.Reverb({
-  decay: 4,
-  wet: 0.5,
-}).toDestination();
+const convolver = new Tone.Convolver("./audio/impulse_belgium.wav").toDestination();
 
-const impulseResponse = new Tone.ToneAudioBuffer('/audio/impulse_belgium.wav');
-reverb.generate().then(() => {}, impulseResponse);
-
-let playerReverb = new Tone.Player('./audio/AcGtr.wav').connect(reverb);
+let playerReverb = new Tone.Player('./audio/AcGtr.wav').connect(convolver);
 
 const ConvolverReverbCombined = () => {
   return (
@@ -18,15 +11,9 @@ const ConvolverReverbCombined = () => {
       <section className='basicSection'>
         <h2>Reverb</h2>
         <pre>
-          <code>{`const reverb = new Tone.Reverb({
-  decay: 4,
-  wet: 0.5,
-}).toDestination();
+          <code>{`const convolver = new Tone.Convolver("./audio/impulse_belgium.wav").toDestination();
 
-const impulseResponse = new Tone.ToneAudioBuffer('/audio/impulse_belgium.wav');
-reverb.generate().then(() => {}, impulseResponse);
-
-let playerReverb = new Tone.Player('./audio/AcGtr.wav').connect(reverb);
+let playerReverb = new Tone.Player('./audio/AcGtr.wav').connect(convolver);
 
 playerReverb.start();`}</code>
         </pre>

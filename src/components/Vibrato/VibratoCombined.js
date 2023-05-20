@@ -4,9 +4,7 @@ import Vibrato from './Vibrato';
 // vibrato
 const vibrato = new Tone.Vibrato(5, 0.85).toDestination();
 
-let playerVibrato = new Tone.Player('./audio/AcGtr.wav').toDestination();
-
-playerVibrato.connect(vibrato);
+let playerVibrato = new Tone.Player('./audio/AcGtr.wav').connect(vibrato);
 
 const VibratoCombined = () => {
   return (
@@ -17,9 +15,7 @@ const VibratoCombined = () => {
           <code>
             {`const vibrato = new Tone.Vibrato(5, 0.85).toDestination();
 
-let playerVibrato = new Tone.Player('./audio/AcGtr.wav').toDestination();
-
-playerVibrato.connect(vibrato);
+let playerVibrato = new Tone.Player('./audio/AcGtr.wav').connect(vibrato);
 
 playerVibrato.start();`}
           </code>
